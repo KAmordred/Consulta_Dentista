@@ -1,0 +1,84 @@
+html,
+body {
+  /* Establece el degradado como fondo para todo el documento */
+  background: linear-gradient(90deg, #d3e9f9, #fff);
+  /* Añade otros estilos según sea necesario */
+  font-family: Arial, sans-serif;
+  color: #333; /* Color del texto */
+  height: 100%; /* Ajusta la altura para que ocupe toda la ventana */
+  margin: 0; /* Elimina los márgenes predeterminados */
+  padding: 0; /* Elimina el relleno predeterminado */
+
+  font-size: 16px;
+}
+.navbar-brand .navbar-logo {
+  max-width: 60px; /* ajusta el ancho máximo de la imagen */
+  height: 60px; /* mantiene la proporción de aspecto */
+}
+
+.card {
+  max-width: 300px; /* Ancho máximo de la tarjeta */
+  margin-bottom: 20px; /* Espacio entre tarjetas */
+}
+
+.card-img-top {
+  height: 200px; /* Altura de la imagen */
+  object-fit: cover; /* Ajusta la imagen para que ocupe todo el espacio disponible */
+}
+
+.card-body {
+  max-height: 150px; /* Altura máxima del cuerpo de la tarjeta */
+  overflow: hidden; /* Oculta el contenido que excede la altura máxima */
+}
+
+img:hover {
+  transform: scale(1.1); 
+}
+
+
+.custom-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap; /* Permite que las tarjetas se ajusten automáticamente */
+  gap: 10px; /* Espacio entre tarjetas */
+  margin-top: 40px;
+}
+
+.custom-container {
+  margin-top: 10px; /* Ajusta el margen superior del contenedor */
+}
+
+/*LINEA DEL COPY*/
+.column {
+  width: 100%;
+  background-color: #0026ff;
+
+
+  height: auto;
+  text-align: center;
+}
+.cosas-mapa iframe{
+  width: 100%;
+  margin-top: 20px;
+
+}
+
+.texto-copy{
+  color: #fff;
+
+}
+
+.somos{
+  color: #000000;
+  text-align: center;
+}
+.card-header{
+
+  text-align: center;
+}
+
+.carousel-item img {
+  max-width: 100%; /* Establece el ancho máximo de las imágenes al 100% del contenedor */
+}
+

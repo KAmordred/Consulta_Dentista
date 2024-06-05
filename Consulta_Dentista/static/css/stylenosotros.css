@@ -1,0 +1,74 @@
+html, body {
+    /* Establece el degradado como fondo para todo el documento */
+    background: linear-gradient(90deg, #D3E9F9,#FFF);
+    /* Añade otros estilos según sea necesario */
+    font-family: Arial, sans-serif;
+    color: #333; /* Color del texto */
+    height: 100%; /* Ajusta la altura para que ocupe toda la ventana */
+    margin: 0; /* Elimina los márgenes predeterminados */
+    padding: 0; /* Elimina el relleno predeterminado */
+    
+    font-size: 16px;
+    
+}
+
+.navbar-brand .navbar-logo {
+    max-width: 60px; /* ajusta el ancho máximo de la imagen */
+    height: 60px; /* mantiene la proporción de aspecto */
+}
+
+/* Estilo para la imagen presentacion */
+
+.imagen-container {
+    width: 200%; /* Ancho completo del contenedor */
+    max-width: 90%; /* Ancho máximo del contenedor (ajusta según tus necesidades) */
+    margin: 30px auto; /* Centra el contenedor horizontalmente y agrega margen superior e inferior */
+    padding: 50 50px; /* Ajusta el padding en los lados izquierdo y derecho del contenedor */
+    
+  
+
+}
+.imagen-presentacion {
+    width: 100%; /* Establece el ancho de la imagen al 100% del contenedor */
+    display: block; /* Asegura que la imagen se comporte como un bloque */
+    transform: scale(1.1); 
+}
+  
+  
+/* Estilo para la imagen presentacion */
+
+
+
+img:hover {
+    transform: scale(1.1); 
+}
+
+/* Estilo para el título "Quienes somos" */
+.titulo {
+    margin-bottom: 20px; /* Agrega un margen en la parte inferior */
+    font-family: Arial, Helvetica, sans-serif;
+    margin-left: 20px; /* Alinea la imagen a la derecha */
+    margin-right: 20px; /* Agrega un margen de 20px a la derecha de la imagen */
+    margin-bottom: 20px; /* Agrega un margen de 20px en la parte inferior de la imagen */
+}
+  
+/* Estilo para las CARDS */
+.card {
+    margin-bottom: 30px; /* Agrega un margen en la parte inferior */
+}
+.barra-color {
+    height: 20px; /* Altura de la barra */
+    width: 100%; /* Ancho de la barra */
+}  
+.barra-1 {
+    background-color: white; /* Color de la primera barra */
+}  
+.barra-2 {
+    background-color: white; /* Color de la segunda barra */
+}
+.barra-3 {
+    background-color: white; /* Color de la tercera barra */
+}
+
+
+

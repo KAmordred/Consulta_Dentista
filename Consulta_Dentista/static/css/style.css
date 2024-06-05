@@ -1,0 +1,140 @@
+html,
+body {
+  
+  background: linear-gradient(90deg, #d3e9f9, #fff);
+  font-family: Arial, sans-serif;
+  color: #333; 
+  height: 100%; 
+  margin: 0; 
+  padding: 0; 
+
+  font-size: 16px;
+}
+.navbar-brand .navbar-logo {
+  max-width: 60px; 
+  height: 60px; 
+}
+
+.containernosotros {
+  top: 10px;
+  position: relative;
+  width: 90%; 
+  max-width: 400px; 
+  margin: auto; 
+  padding: 10px;
+  background-color: rgb(53, 149, 173);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+}
+
+.recuadro img {
+  max-width: 100%; 
+  border-radius: 10px; 
+  margin-bottom: 10px; 
+}
+
+.recuadro {
+  background-color: #557ea7; 
+  border: 2px solid #000000; 
+  border-radius: 10px; 
+  padding: 20px; 
+  max-width: 400px; 
+  margin: 20px auto; 
+  text-align: center; 
+}
+
+#carouselExampleCaptions {
+  padding: 20px; 
+}
+
+.carousel-inner {
+  overflow: hidden; 
+}
+
+
+
+.carousel-item {
+  text-align: center; 
+}
+
+/*LINEA DEL COPY*/
+.column {
+  width: 100%;
+  background-color: #0026ff;
+
+
+  height: auto;
+  text-align: center;
+}
+.cosas-mapa iframe{
+  width: 100%;
+  margin-top: 20px;
+
+}
+
+.texto-copy{
+  color: #fff;
+
+}
+
+.somos{
+  color: #000000;
+  text-align: center;
+}
+.card-header{
+
+  text-align: center;
+}
+
+.carousel-item img {
+  max-width: 100%; 
+}
+
+
+
+#reloj {
+  font-size: 24px;
+  font-weight: bold;
+  padding: 10px; 
+  border-radius: 25px; 
+  text-align: center;
+}
+
+.color font{
+  color: #000000;
+}
+
+/*
+como @media le daremos el formato para que sea responsive en todas las pantallas
+RECORDAR DEJAR TODO LO QUE NECECITAMOS USAR
+es una regla general de CSS 
+*/
+@media (min-width: 768px) {
+  
+  .carousel-item img {
+    display: block;
+    margin: 0 auto; 
+  }
+
+  
+  .containernosotros {
+    width: 50%; 
+  }
+
+  
+  #reloj {
+    max-width: 400px; 
+    margin-left: auto; 
+    margin-right: auto; 
+  }
+}
+
+
+@media (max-width: 767px) {
+  
+  #reloj {
+    max-width: 80%; 
+    margin: 0 auto; 
+  }
+}
+

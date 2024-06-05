@@ -1,0 +1,46 @@
+.container{
+  
+  margin-top: 30px;
+  
+}
+
+.nuestras-especialidades{
+
+  text-align: center;
+  margin-top: 30px;
+}
+
+.card{
+  text-align: start;
+  height: 100%;
+  background-color: #557ea7;
+  
+
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; 
+  align-items: center;
+  height: 100%; 
+}
+
+.card-body p {
+  margin-bottom: auto;
+}
+body{
+
+ /* Establece el degradado como fondo para todo el documento */
+ background: linear-gradient(90deg, #d3e9f9, #fff);
+ /* Añade otros estilos según sea necesario */
+ font-family: Arial, sans-serif;
+ color: #333; /* Color del texto */
+ height: 100%; /* Ajusta la altura para que ocupe toda la ventana */
+ margin: 0; /* Elimina los márgenes predeterminados */
+ padding: 0; /* Elimina el relleno predeterminado */
+}
+
+
+
+
