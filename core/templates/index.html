@@ -1,0 +1,171 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Página principal</title>
+  <!-- Enlace al archivo CSS de Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>  
+  <!-- la clase nav es la barra superior  -->
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#"><img class="navbar-logo" src="{% static 'images/Imagen_LOgo_copia.jpg' %}" alt="Logo"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'index'%}">Principal</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'AVentaEquiposRX'%}">Productos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'insumos'%}">Equipos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'especialidades'%}">Especialidades</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'nosotros'%}">Nosotros</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href=" {% url 'contactanos' %}">Contáctanos</a>
+          </li>
+        </ul>
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Buscar</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+  <!-- carrusel -->
+  <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <a href=" {% url 'AVentaSillonesFull' %} ">
+          <img src="{% static 'imagenes/sillon2000.webp' %}" class="d-block w-100" alt="...">
+          <div class="carousel-caption d-none d-md-block">
+            <h2><strong>PRODUCTOS</strong></h2>
+            <p>Revisa nuestros equipos</p>
+          </div>
+        </a>    
+      </div>
+      <div class="carousel-item">
+        <a href="{% url 'insumos'%}">
+          <img src="{% static 'imagenes/Materiales_2.jpg' %}" class="d-block w-100" alt="...">
+          <div class="carousel-caption d-none d-md-block">
+            <h2><strong>COMPRAR</strong></h2>
+            <p>Materiales de calidad y reconocidos a nivel mundial.</p>
+          </div>
+        </a>
+      </div>
+      <div class="carousel-item">
+        <a href="{% url 'especialidades'%}">
+          <img src="{% static 'imagenes/Microcirugia-plastica-periodontal-estetica-1.webp' %}" class="d-block w-100" alt="...">
+          <div class="carousel-caption d-none d-md-block">
+            <h2><strong>Nuestras Especialidades</strong></h2>
+            <p>Todas las especialidades para tus Tratamientos con tecnología de punta.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+  <!-- Off-canvas para el carrito de compras -->
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+      <h2 class="offcanvas-title" id="offcanvasExampleLabel">Carrito de Compras</h2>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul id="cart-items"></ul>
+      <p id="cart-total">Total: $0</p>
+      <button class="btn btn-primary" onclick="simularPago()">Pagar Total</button>
+    </div>
+  </div>
+
+  <!--bloque modal-->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Usuario</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!--el siguiente form es para el formulario de correo y contraseña -->
+          <form action="https://kgames-serverless-api-delta.vercel.app/api/tester" method="post" class="container">
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" required class="form-control" id="email" placeholder="name@example.com">
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Contraseña</label>
+              <input type="password" required minlength="6"  name="password" id="pass" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label for="confirmPassword" class="form-label">Confirmar Contraseña</label>
+              <input type="password" required minlength="6" id="confirmPass" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary">Registrarse</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-primary">Iniciar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD NOSOTROS EL PORQUÉ ELEGIRNOS -->
+  <div class="recuadro">
+    <img src="{% static 'images/Imagen_LOgo_copia.jpg' %}" alt="Imagen en el recuadro">
+    <h2>BIENVENIDO A NUESTRA CLINICA!</h2>
+    <p>Contamos con todas las especialidades y especialistas, devolveremos tu sonrisa.</p>
+    <a href="#" class="btn btn-primary">Conoce nuestros casos</a>
+  </div>
+
+  <!--PARTE DEL MAPA -->
+  <div class="cosas-mapa">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13317.557562219345!2d-70.6755018128418!3d-33.43916029999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662c59350e45d2f%3A0x85c58d65633fc4fb!2sPro%20Dental%20Santiago!5e0!3m2!1ses!2scl!4v1713580770583!5m2!1ses!2scl" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+  <!--FIN DEL MAPA-->
+
+  <!--PIE DE PÁGINA EL TODOS LOS DERECHOS RESERVADOS-->
+  <div class="column">
+    <div class="widget">
+      <p class="texto-copy"> <span>® 2024 Clínica Dental Cepillin. Todos los derechos reservados</span></p>
+    </div>
+  </div>
+  <!--FIN DE TODOS LOS DERECHOS -->
+
+  <!-- Incluye el script de Bootstrap JS al final del cuerpo -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{% static 'js/Registro.js' %}"></script>
+  <script src="{% static 'js/Reloj.js' %}"></script>
+</body>
+</html>
