@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="e">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +16,7 @@
     </style>
 </head>
 <body>
-  <!-- NavBarr para Logo / Buscar / Iniciar sesión / Carrito  -->
+    <!-- NavBarr para Logo / Buscar / Iniciar sesión / Carrito  -->
     <!-- Navbar superior -->
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
@@ -30,16 +30,15 @@
                 </form>
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Iniciar sesión <br>Mi cuenta</a>
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Iniciar sesión <br>Mi cuenta</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample">Carro</a>
-
+                        <a class="nav-link" href="#" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">Carro</a>
                     </li>
-                </ul>   
+                </ul>
             </div>
         </div>
-    </nav>
+    </nav>      
     <!-- Navbar inferior para Principal/ Productos / Equipos / Especialidades / Nosotros / Contáctanos -->
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
@@ -70,79 +69,13 @@
                 </ul>
             </div>
         </div>
-    </nav> 
+    </nav>
     <!--FINAL DE LA NAV BAR PARA TODAS LAS VISTAS--> 
 
-        <!-- Bloque modal para inicio de sesión -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Ingresar a mi cuenta <br>Ingrese su email y contraseña:</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Formulario de inicio de sesión -->
-                        <form action="https://kgames-serverless-api-delta.vercel.app/api/tester" method="post" class="container">
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Correo Electrónico</label>
-                                <input type="email" required class="form-control" id="email" placeholder="name@example.com">
-                            </div>
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Contraseña</label>
-                                <input type="password" required minlength="6" name="password" id="pass" class="form-control">
-                            </div>
-                            <div class="mb-3 d-flex justify-content-between align-items-center">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="rememberCheck">
-                                    <label class="form-check-label" for="rememberCheck">Recordarme</label>
-                                </div>
-                                <a href="#" class="forgot-password">¿Olvidó su contraseña?</a>
-                            </div>
-                            <div class="mb-3 text-center">
-                                <button type="submit" class="btn btn-primary btn-lg btn-block">Ingresar</button>
-                            </div>
-                            <p class="new-account-message text-center">¿Cliente nuevo? <a href="#" class="create-account-link" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#signUpModal">Crear cuenta</a></p>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Bloque modal para crear cuenta -->
-        <div class="modal fade" id="signUpModal" tabindex="-1" aria-labelledby="signUpModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="signUpModalLabel">Crear cuenta</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Formulario de registro -->
-                        <form action="URL_de_registro" method="post" class="container">
-                            <div class="mb-3">
-                                <label for="signup-email" class="form-label">Correo Electrónico</label>
-                                <input type="email" required class="form-control" id="signup-email" placeholder="name@example.com">
-                            </div>
-                            <div class="mb-3">
-                                <label for="signup-password" class="form-label">Contraseña</label>
-                                <input type="password" required minlength="6" name="signup-password" id="signup-pass" class="form-control">
-                            </div>
-                            <div class="mb-3">
-                                <label for="confirmPassword" class="form-label">Confirmar Contraseña</label>
-                                <input type="password" required minlength="6" id="confirmPass" class="form-control">
-                            </div>
-                            <button type="submit" class="btn btn-primary">Crear cuenta e Ingresar</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     <!-- Off-canvas para el carrito de compras -->
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas" aria-labelledby="cartOffcanvasLabel">
         <div class="offcanvas-header">
-            <h4 class="offcanvas-title" id="offcanvasExampleLabel">Carrito de Compras</h4>        
+            <h4 class="offcanvas-title" id="cartOffcanvasLabel">Carrito de Compras</h4>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
@@ -160,6 +93,72 @@
             <ul id="cart-items"></ul>
             <p id="cart-total">Total: $0</p>
             <button class="btn btn-primary" onclick="simularPago()">Pagar Total</button>
+        </div>
+    </div>
+
+    <!-- Bloque modal para inicio de sesión -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="loginModalLabel">Ingresar a mi cuenta <br>Ingrese su email y contraseña:</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Formulario de inicio de sesión -->
+                    <form action="https://kgames-serverless-api-delta.vercel.app/api/tester" method="post" class="container">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Correo Electrónico</label>
+                            <input type="email" required class="form-control" id="email" placeholder="name@example.com">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Contraseña</label>
+                            <input type="password" required minlength="6" name="password" id="pass" class="form-control">
+                        </div>
+                        <div class="mb-3 d-flex justify-content-between align-items-center">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="rememberCheck">
+                                <label class="form-check-label" for="rememberCheck">Recordarme</label>
+                            </div>
+                            <a href="#" class="forgot-password">¿Olvidó su contraseña?</a>
+                        </div>
+                        <div class="mb-3 text-center">
+                            <button type="submit" class="btn btn-primary btn-lg btn-block">Ingresar</button>
+                        </div>
+                        <p class="new-account-message text-center">¿Cliente nuevo? <a href="#" class="create-account-link" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#signUpModal">Crear cuenta</a></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bloque modal para crear cuenta -->
+    <div class="modal fade" id="signUpModal" tabindex="-1" aria-labelledby="signUpModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="signUpModalLabel">Crear cuenta</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Formulario de registro -->
+                    <form action="URL_de_registro" method="post" class="container">
+                        <div class="mb-3">
+                            <label for="signup-email" class="form-label">Correo Electrónico</label>
+                            <input type="email" required class="form-control" id="signup-email" placeholder="name@example.com">
+                        </div>
+                        <div class="mb-3">
+                            <label for="signup-password" class="form-label">Contraseña</label>
+                            <input type="password" required minlength="6" name="signup-password" id="signup-pass" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Confirmar Contraseña</label>
+                            <input type="password" required minlength="6" id="confirmPass" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Crear cuenta e Ingresar</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -242,8 +241,9 @@
     </footer>
 
     <!-- Enlaces a archivos JavaScript de Bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gybBogGzE/rz0XB5uH2C1f4F1MNaA9G/JISW3Ad8CZOAJPXk+l" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-QF3odrX4gkPB4LA8RSvzXyZHA7K8/Ku6MRd3cfcIT72YTGyw5A1C2t6/5VV6NtWQ" crossorigin="anonymous"></script>
+    <!-- Scripts de Bootstrap y dependencias -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
     <script src="{% static 'js/script.js' %}"></script>
     <script>
         function toggleSubmitButton() {
