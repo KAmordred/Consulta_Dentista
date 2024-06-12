@@ -10,9 +10,15 @@ body {
 
   font-size: 16px;
 }
+
 .navbar-brand .navbar-logo {
   max-width: 60px; 
   height: 60px; 
+}
+
+/* Relacionado: Espacio entre elementos */
+.navbar-nav .nav-item {
+  margin-right: 40px; /* Ajustar el valor del espacio entre los Items */
 }
 
 .containernosotros {
@@ -50,8 +56,6 @@ body {
 .carousel-inner {
   overflow: hidden; 
 }
-
-
 
 .carousel-item {
   text-align: center; 
