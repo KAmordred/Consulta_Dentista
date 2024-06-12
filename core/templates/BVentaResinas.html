@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -8,39 +9,39 @@
   <!-- Enlace al archivo CSS de Bootstrap -->
   <!--EN CADA PÁGINA DONDE VA UN BOOTSTRAP VA EL LINK CORRESPONDIENTE -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>  
   <!-- la clase nav es la barra superior  -->
   <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#"><img class="navbar-logo" src="imagenes/Imagen LOgo copia.jpg" alt="Logo"></a>
+      <a class="navbar-brand" href="#"><img class="navbar-logo" src="{% static 'imagenes/Imagen LOgo copia.jpg' %}" alt="Logo"></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="index.html">Principal</a>
+            <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Principal</a>
           </li>
           
           <li class="nav-item">
-            <a class="nav-link" href="AVentaEquiposRX.html">Productos</a>
+            <a class="nav-link" href="{% url 'AVentaEquiposRX' %}">Productos</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="insumos.html">Equipos</a>
+            <a class="nav-link" href="{% url 'insumos' %}">Equipos</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="especialidades.html">Especialidades</a>
+            <a class="nav-link" href="{% url 'especialidades' %}">Especialidades</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="nosotros.html">Nosotros</a>
+            <a class="nav-link" href="{% url 'nosotros' %}">Nosotros</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Login</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="contactanos.html">Contáctanos</a>
+            <a class="nav-link" href="{% url 'contactanos' %}">Contáctanos</a>
           </li>
         </ul>
         <form class="d-flex" role="search">
@@ -55,7 +56,7 @@
   <!--Regresar a BAR PARA TODAS LAS VISTAS-->
    <nav style="margin-top: 20px; margin-left: 20px; font-family: Arial, sans-serif; --bs-breadcrumb-divider: '';" aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="insumos.html" style="color: black;"><strong>Materiales</strong></a></li>
+      <li class="breadcrumb-item"><a href="{% url 'insumos' %}" style="color: black;"><strong>Materiales</strong></a></li>
       <li class="breadcrumb-item active" aria-current="page" style="color: rgba(74, 73, 73, 0.738);">Resinas</li>
     </ol>
   </nav>    
@@ -65,7 +66,7 @@
     <div class="row">
       <div class="col-md-6">
         <!-- Imagen del producto -->
-        <img src="materiales-clinica/Restaurador Universal 3M™ Filtek™ Z350 XT.jpg" class="img-fluid" alt="Producto">
+        <img src="{% static 'imagenes/materiales-clinica/Restaurador Universal 3M™ Filtek™ Z350 XT.jpg' %}" class="img-fluid" alt="Producto">
       </div>
       <div class="col-md-6">
         <!-- Descripción del producto y boton para agregar al carro -->
@@ -210,7 +211,7 @@
 
   <!-- Incluye el script de Bootstrap JS al final del cuerpo -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="Registro.js"></script>
-  <script src="Reloj.js"></script>
+  <script src="{% static 'js/Reloj.js' %}"></script> 
+  <script src="{% static 'js/Registro.js' %}"></script>
 </body>
 </html>
