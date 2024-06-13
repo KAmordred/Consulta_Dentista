@@ -16,6 +16,7 @@ urlpatterns = [
     path('BVentaKitCompleto/', views.venta_kit_completo, name='BVentaKitCompleto'),
     path('BVentaResinas/', views.venta_resinas, name='BVentaResinas'),
     path('sillones/', views.sillones, name='sillones'),
+    path('despacho/', views.despacho, name='despacho'),
 
    
 ]

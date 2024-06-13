@@ -41,4 +41,10 @@ def venta_kit_completo(request):
 
 def venta_resinas(request):
     return render(request, 'BVentaResinas.html')
+
+def despacho(request):
+    return render(request, 'despacho.html')
+
+
+
 # Create your views here.
