@@ -18,5 +18,5 @@ urlpatterns = [
     path('sillones/', views.sillones, name='sillones'),
     path('despacho/', views.despacho, name='despacho'),
 
-   
+    path('login/', views.login_vista, name='login'),
 ]

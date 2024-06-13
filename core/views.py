@@ -48,3 +48,8 @@ def despacho(request):
 
 
 # Create your views here.
+
+
+#Metodo de vista para manejar login
+def login_vista(request):
+    return render(request, 'login.html')

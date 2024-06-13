@@ -1,0 +1,17 @@
+{% extends 'Plantilla_base.html' %}
+
+{% load static %}
+
+{% block title %}login{% endblock %}
+
+{% block content %}
+    <h1>Entrar</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="email" class="form-control" name="usuario" id="usuario" placeholder="Usuario" required>
+        <input type="password" class="form-control" name="password" id="password" placeholder="Contraseña" required>
+        <input type="submit" class="btn btn-primary" value="Entrar">
+    </form>
+{% endblock  %}
+
+
