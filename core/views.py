@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import login,authenticate,logout
 
+# Create your views here.
 def index(request):
     return render(request, 'index.html')
 
@@ -46,10 +48,24 @@ def despacho(request):
     return render(request, 'despacho.html')
 
 
-
-# Create your views here.
-
-
 #Metodo de vista para manejar login
 def login_vista(request):
-    return render(request, 'login.html')
+
+    error = None
+
+    if request.method == 'POST':
+        usuario = request.POST.get('usuario')
+        contra = request.POST.get('password')   
+
+
+
+        user = authenticate(username = usuario,password = contra)
+
+        if user is None:
+            error = 'Error: Las credenciales de acceso no son validas'
+        else:
+            login(request, user)
+            return redirect('index')
+
+
+    return render(request, 'login.html',{"error":error})
