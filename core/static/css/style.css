@@ -108,6 +108,21 @@ body {
   color: #000000;
 }
 
+/*Imagen de la vista nosotros*/
+.imagen-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* Ajusta según sea necesario */
+}
+.imagen-presentacion {
+  width: 100%;
+  max-width: 1200px; /* Ajusta según el tamaño máximo deseado */
+  height: auto;
+  display: block;
+}
+
+
 /*
 como @media le daremos el formato para que sea responsive en todas las pantallas
 RECORDAR DEJAR TODO LO QUE NECECITAMOS USAR
