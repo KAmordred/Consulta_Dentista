@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login,authenticate,logout
+from .forms import ProductoForm
+from .models import Producto
 
 # Create your views here.
 def index(request):
@@ -46,6 +48,43 @@ def venta_resinas(request):
 
 def despacho(request):
     return render(request, 'despacho.html')
+
+def detalle_producto(request,pk):
+    producto = get_object_or_404(producto,pk=pk)
+    return render(request,'detalle_producto.html',{'producto': producto})
+
+def editar_producto(request,pk):
+    producto = get_object_or_404(producto,pk=pk)
+    if request.method == "POST":
+        form = productoform(request.POST, request.FILES, isinstance=producto)
+        if form.is_valid():
+            producto = form.save()
+            return redirect('detalle_producto', pk=producto.pk)
+    else:
+        form = productoform(isinstance=producto)
+    return render(request,'editar_producto.html' , {'form' : form})
+
+def lista_producto(request):
+    productos =Producto.objects.all()
+    return render(request,'lista_producto.html', {'productos': productos})
+
+def nuevo_producto (request):
+    if request.method =="POST":
+        form = productoform(reqest.POST, request.FILES)
+        if form.is_valid():
+            producto = form.save()
+            return redirect('detalle_producto', pk=producto.pk)
+    else:
+        form = productoform(isinstance=producto)
+    return render(request,'editar_producto.html' , {'form' : form})
+
+def eliminar_producto(request, pk):
+    producto = get_object_or_404(producto , pk=pk)
+    producto.delete()
+    return redirect('lista_productos')
+
+
+
 
 
 #Metodo de vista para manejar login

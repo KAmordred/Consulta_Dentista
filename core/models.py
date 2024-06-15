@@ -5,10 +5,11 @@ class Producto(models.Model):
     descripcion = models.TextField()
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     cantidad_disponible = models.PositiveIntegerField()
+    imagen = models.ImageField(upload_to ='Productos/')
 
     def __str__(self):
         return self.nombre
-
+"""
 class Pedido(models.Model):
     fecha_pedido = models.DateTimeField(auto_now_add=True)
     productos = models.ManyToManyField(Producto, through='DetallePedido')
@@ -27,3 +28,4 @@ class DetallePedido(models.Model):
     def __str__(self):
         return f"Detalle de Pedido #{self.pedido.id} - {self.producto.nombre}"
 # Create your models here.
+"""
