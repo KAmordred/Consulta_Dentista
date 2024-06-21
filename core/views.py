@@ -78,6 +78,8 @@ def nuevo_producto (request):
         form = productoform(isinstance=producto)
     return render(request,'editar_producto.html' , {'form' : form})
 
+
+
 def eliminar_producto(request, pk):
     producto = get_object_or_404(producto , pk=pk)
     producto.delete()
