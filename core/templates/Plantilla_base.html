@@ -10,8 +10,9 @@
     <!-- Estilos personalizados -->
     <link rel="stylesheet" href="{% static 'estilos.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/styleinsumos.css' %}">
+
     {% block stylesheets %}{% endblock %}
+    {% block extra_css %}{% endblock %}
     <style>
         .navbar-brand .navbar-logo {
             max-width: 60px; /* ajusta el ancho máximo de la imagen */

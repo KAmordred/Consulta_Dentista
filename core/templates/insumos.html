@@ -4,21 +4,27 @@
 
 {% block title %}insumos{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/styleinsumos.css' %}">
+{% endblock %}
+
 {% block content %}
     <!-- Contenido principal -->
-    <div class="container-lg">
-      <!-- Aquí va el contenido de la página principal -->
-      <div class="contenedor-principal">
-        <div class="contenedor-productos">
-          <!-- PRODUCTOS QUE SE VEN EN MI PAGINA -->
+    <div class="insumos-page">
+        <div class="container-lg">
+            <!-- Aquí va el contenido de la página principal -->
+            <div class="contenedor-principal">
+                <div class="contenedor-productos">
+                    <!-- PRODUCTOS QUE SE VEN EN MI PAGINA -->
+                </div>
+                <div class="contenedor-carrito">
+                    <h2>Carrito de Compras</h2>
+                    <ul id="lista-carrito"></ul>
+                    <p id="total">Total: $0</p>
+                    <button class="boton-pagar" onclick="simularPago()">Pagar Total</button>
+                </div>
+            </div>
         </div>
-        <div class="contenedor-carrito">
-          <h2>Carrito de Compras</h2>
-          <ul id="lista-carrito"></ul>
-          <p id="total">Total: $0</p>
-          <button class="boton-pagar" onclick="simularPago()">Pagar Total</button>
-        </div>
-      </div>
     </div>
     
     <!-- Script de Bootstrap JS al final del cuerpo -->
@@ -26,5 +32,3 @@
     <!-- Archivo JavaScript personalizado -->
     <script src="{% static 'js/js-insumos.js' %}"></script>
 {% endblock %}
-
-
