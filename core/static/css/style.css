@@ -154,8 +154,16 @@ body {
   font-family: 'Arial', sans-serif; /* Cambia la fuente del botón de entrada */
 }
 
-
-
+#reloj {
+  font-size: 24px;
+  font-weight: bold;
+  padding: 10px; 
+  border-radius: 25px; 
+  text-align: center;
+}
+.color font{
+  color: #000000;
+}
 
 /*
 como @media le daremos el formato para que sea responsive en todas las pantallas
