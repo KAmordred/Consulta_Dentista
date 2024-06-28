@@ -5,22 +5,24 @@
 {% block title %}login{% endblock %}
 
 {% block content %}
-    <h1>Entrar</h1>
+    <div class="login-container">
+        <h1>Entrar</h1>
 
-    {% if error %}
-        <div class="alert alert-danger" role="alert">
-            {{error}}
-        </div>
-    {% endif %}
+        {% if error %}
+            <div class="alert alert-danger" role="alert">
+                {{error}}
+            </div>
+        {% endif %}
 
+        <form method="POST" class="login-form">
+            {% csrf_token %}
+            <input type="email" class="form-control login-input" name="usuario" id="usuario" placeholder="Usuario" required>
+            <input type="password" class="form-control login-input" name="password" id="password" placeholder="Contraseña" required>
+            <br>
+            <input type="submit" class="btn btn-primary login-button" value="Entrar">
+        </form>
+    </div>
+{% endblock %}
 
-    <form method="POST">
-        {% csrf_token %}
-        <input type="email" class="form-control" name="usuario" id="usuario" placeholder="Usuario" required>
-        <input type="password" class="form-control" name="password" id="password" placeholder="Contraseña" required>
-        <br>
-        <input type="submit" class="btn btn-primary" value="Entrar">
-    </form>
-{% endblock  %}
 
 

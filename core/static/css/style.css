@@ -136,6 +136,24 @@ body {
   align-items: center;
 }
 
+/*Estilos para login*/
+.login-container {
+  margin-left: 20px; /* Ajusta el margen a la izquierda según sea necesario */
+}
+
+.login-form {
+  max-width: 300px; /* Ajusta el ancho máximo del formulario */
+}
+
+.login-input {
+  width: 100%; /* Los inputs ocuparán todo el ancho disponible dentro del formulario */
+  margin-bottom: 10px; /* Espacio entre los inputs */
+}
+
+.login-button {
+  font-family: 'Arial', sans-serif; /* Cambia la fuente del botón de entrada */
+}
+
 
 
 
