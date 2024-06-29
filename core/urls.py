@@ -18,6 +18,7 @@ urlpatterns = [
     path('sillones/', views.sillones, name='sillones'),
     path('despacho/', views.despacho, name='despacho'),
     path('login/', views.login_vista, name='login'),
+    path('logout', views.salir, name='logout'),
 
     path('productos/', views.lista_producto, name = 'lista_producto'),
     path('productos/nuevo/', views.nuevo_producto, name ='nuevo_producto'),

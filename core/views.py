@@ -87,6 +87,11 @@ def eliminar_producto(request, pk):
     producto.delete()
     return redirect('lista_productos')
 
+#Metodo desloguear 
+def salir(request):
+    logout(request)
+    return redirect('index');
+
 #Metodo de vista para manejar login.
 def login_vista(request):
 
@@ -102,7 +107,7 @@ def login_vista(request):
             error = 'Error: Las credenciales de acceso no son validas'
         else:
             login(request, user)
-            return redirect('index')
+            return redirect('insumos')
 
     return render(request, 'login.html',{"error":error})
 
