@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login,authenticate,logout
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_required
 from .forms import ProductoForm
 from .models import Producto
+
+
 
 # Create your views here.
 def index(request):
@@ -79,17 +82,12 @@ def nuevo_producto (request):
     return render(request,'editar_producto.html' , {'form' : form})
 
 
-
 def eliminar_producto(request, pk):
     producto = get_object_or_404(producto , pk=pk)
     producto.delete()
     return redirect('lista_productos')
 
-
-
-
-
-#Metodo de vista para manejar login
+#Metodo de vista para manejar login.
 def login_vista(request):
 
     error = None
@@ -98,9 +96,7 @@ def login_vista(request):
         usuario = request.POST.get('usuario')
         contra = request.POST.get('password')   
 
-
-
-        user = authenticate(username = usuario,password = contra)
+        user = authenticate(username = usuario, password = contra)
 
         if user is None:
             error = 'Error: Las credenciales de acceso no son validas'
@@ -108,5 +104,14 @@ def login_vista(request):
             login(request, user)
             return redirect('index')
 
-
     return render(request, 'login.html',{"error":error})
+
+#Proteger las vistas requeridas con el decorador, para que solo los usuarios autenticados puedan acceder.
+@login_required
+def comprar(request):
+    return render(request, 'comprar.html')
+
+@login_required
+def reservar(request):
+    return render(request, 'reservar.html')
+# Lógica para procesar la reserva y la compra (Return)

@@ -53,6 +53,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # backend predeterminado para la autenticación de usuarios
+]
+
 ROOT_URLCONF = 'Consulta_Dentista.urls'
 
 TEMPLATES = [
