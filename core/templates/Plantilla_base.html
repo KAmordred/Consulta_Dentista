@@ -10,15 +10,14 @@
     <!-- Estilos personalizados -->
     <link rel="stylesheet" href="{% static 'estilos.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/styleinsumos.css' %}">
     {% block stylesheets %}{% endblock %}
+    {% block extra_css %}{% endblock %}
     <style>
         .navbar-brand .navbar-logo {
             max-width: 60px; /* ajusta el ancho máximo de la imagen */
             height: 60px; /* mantiene la proporción de aspecto */
         }
     </style>
-    
 </head>
 <body>
     <!-- Navbar superior -->
@@ -34,9 +33,15 @@
                         <input class="form-control me-2 flex-grow-1" type="search" placeholder="Productos, marcas y más..." aria-label="Search">
                     </form>
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'login' %}">Iniciar sesión <br>Mi cuenta</a>
-                        </li>
+                        {% if user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'logout' %}">Cerrar sesión</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'login' %}">Iniciar sesión <br>Mi cuenta</a>
+                            </li>
+                        {% endif %}
                         <li class="nav-item">
                             <a class="nav-link" href="#" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">Carro</a>
                         </li>
@@ -61,7 +66,7 @@
                         <a class="nav-link" href="{% url 'AVentaEquiposRX' %}">Productos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'insumos' %}">Equipos</a>
+                        <a class="nav-link" href="{% url 'insumos' %}">Comprar</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'especialidades' %}">Especialidades</a>
@@ -73,12 +78,11 @@
                         <a class="nav-link" href="{% url 'contactanos' %}">Contáctanos</a>
                     </li>
                 </ul>
-            </div>
-            <div class="derecha ms-auto">
-                {% if user.is_authenticated %}
-                    <strong><p>Bienvenido, {{user.username}}</p></strong>
-                {% endif %}
-                
+                <div class="derecha ms-auto">
+                    {% if user.is_authenticated %}
+                        <strong><p>Bienvenido, {{user.username}}</p></strong>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </nav>
@@ -123,7 +127,7 @@
     <!--PIE DE PÁGINA EL TODOS LOS DERECHOS RESERVADOS-->
     <div class="column">
         <div class="widget">
-        <p class="texto-copy"> <span>® 2024 Clínica Dental Cepillin. Todos los derechos reservados</span></p>
+            <p class="texto-copy"> <span>® 2024 Clínica Dental Cepillin. Todos los derechos reservados</span></p>
         </div>
     </div>
     <!--FIN DE TODOS LOS DERECHOS -->

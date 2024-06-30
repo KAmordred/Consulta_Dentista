@@ -130,9 +130,18 @@ function actualizarOffCanvas() {
   totalElement.textContent = "Total: " + document.getElementById("total").textContent;
 }
 
-// Evento cuando se carga el contenido DOM
+// Verificar si el usuario está autenticado
 document.addEventListener("DOMContentLoaded", function() {
-  crearTarjetas(); // Crear las tarjetas de productos al cargar la página
+  const userAuthenticated = "{{ user.is_authenticated }}";
+
+  if (userAuthenticated === 'True') {
+    // Usuario autenticado: permitir funcionalidad completa
+    crearTarjetas(); // Crear las tarjetas de productos al cargar la página
+  } else {
+    // Usuario no autenticado: mostrar mensaje de inicio de sesión
+    const contenedorProductos = document.querySelector(".contenedor-productos");
+    contenedorProductos.innerHTML = '<p>Por favor, inicia sesión para comprar productos.</p>';
+  }
 
   // Cerrar el off-canvas al hacer clic en el botón de cerrar
   const closeOffcanvasBtn = document.querySelector("#offcanvasExample .btn-close");

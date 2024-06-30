@@ -4,6 +4,10 @@
 
 {% block title %}index{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+
 {% block content %}
       <!-- carrusel -->
       <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
@@ -59,6 +63,14 @@
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Next</span>
         </button>
+      </div>
+
+      <!-- Reloj en tiempo real -->
+      <div id="reloj">
+        <div class="reloj">
+            <p class="fecha"></p>
+            <p class="tiempo"></p>
+        </div>
       </div>
 
       <!-- CARD NOSOTROS EL PORQUÉ ELEGIRNOS -->
