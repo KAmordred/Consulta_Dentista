@@ -137,10 +137,6 @@ document.addEventListener("DOMContentLoaded", function() {
   if (userAuthenticated === 'True') {
     // Usuario autenticado: permitir funcionalidad completa
     crearTarjetas(); // Crear las tarjetas de productos al cargar la página
-  } else {
-    // Usuario no autenticado: mostrar mensaje de inicio de sesión
-    const contenedorProductos = document.querySelector(".contenedor-productos");
-    contenedorProductos.innerHTML = '<p>Por favor, inicia sesión para comprar productos.</p>';
   }
 
   // Cerrar el off-canvas al hacer clic en el botón de cerrar
@@ -193,9 +189,5 @@ function cargarCarritoDesdeLocalStorage() {
 
       actualizarTotal(producto.precio);
     });
-
-    // Actualizar el contenido del off-canvas
-    actualizarOffCanvas();
-    console.log('Carrito cargado desde localStorage:', carrito);
   }
 }

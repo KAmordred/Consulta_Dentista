@@ -13,9 +13,13 @@
     <div class="insumos-page">
         <div class="container-lg">
             <!-- Aquí va el contenido de la página principal -->
+        
             <div class="contenedor-principal">
                 <div class="contenedor-productos">
-                    <!-- PRODUCTOS QUE SE VEN EN MI PAGINA -->
+                    {% if not user.is_authenticated %}
+                        <p id="mensaje-sesion">Por favor, inicia sesión para comprar productos.</p>
+                    {% endif %}
+                    <!-- El mensaje de inicio de sesión y las tarjetas de productos se manejarán en el script -->
                 </div>
                 <div class="contenedor-carrito">
                     <h2>Carrito de Compras</h2>
@@ -35,21 +39,18 @@
     <!-- Verificación de autenticación del usuario y ajuste del contenido -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const userAuthenticated = "{{ user.is_authenticated }}";
+            const userAuthenticated = "{{ user.is_authenticated }}" === 'True';
 
-            if (userAuthenticated === 'True') {
+            if (userAuthenticated) {
                 // Usuario autenticado: permitir funcionalidad completa
                 crearTarjetas(); // Crear las tarjetas de productos al cargar la página
-            } else {
-                // Usuario no autenticado: mostrar mensaje de inicio de sesión
-                const contenedorProductos = document.querySelector(".contenedor-productos");
-                contenedorProductos.innerHTML = '<p>Por favor, inicia sesión para comprar productos.</p>';
+
+                // Eliminar el mensaje de sesión si existe
+                const mensajeSesion = document.getElementById("mensaje-sesion");
+                if (mensajeSesion) {
+                    mensajeSesion.remove();
+                }
             }
         });
-
-    //Condición de Autenticación: Utilizamos {{ user.is_authenticated }} de Django para verificar si el usuario está autenticado.
- 
-    //Si el usuario está autenticado, se llama a la función crearTarjetas() para generar las tarjetas de productos.
-    //Si el usuario no está autenticado, se muestra un mensaje indicando que debe iniciar sesión comprar productos.    
     </script>
 {% endblock %}
