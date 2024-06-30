@@ -4,8 +4,6 @@ from django.contrib.auth.decorators import login_required
 from .forms import ProductoForm
 from .models import Producto
 
-
-
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
@@ -52,51 +50,58 @@ def venta_resinas(request):
 def despacho(request):
     return render(request, 'despacho.html')
 
-
 def agregar_producto(request):
     if request.method == 'POST':
         form = ProductoForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             # Redirigir a la página principal o a donde necesites después de guardar
-            return redirect('agregar_producto')  # Ajusta 'home' al nombre de tu ruta de redirección
+            return redirect('lista_producto')  # Ajustar 'lista_producto' al nombre correcto de la ruta
     else:
         form = ProductoForm()
-
     return render(request, 'agregar.html', {'form': form})
-
-
 
 def listar_producto(request):
     productos = Producto.objects.all()
+    return render(request, 'listar.html', {'productos': productos})
 
-    data = {
-        'productos' : productos
-    }
-    return render(request, 'listar.html',data)
+def detalle_producto(request, pk):
+    producto = Producto.objects.get(pk=pk)
+    return render(request, 'detalle.html', {'producto': producto})
 
+def editar_producto(request, pk):
+    producto = Producto.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = ProductoForm(request.POST, instance=producto)
+        if form.is_valid():
+            form.save()
+            return redirect('detalle_producto', pk=pk)
+    else:
+        form = ProductoForm(instance=producto)
+    return render(request, 'editar.html', {'form': form})
 
+def eliminar_producto(request, pk):
+    producto = Producto.objects.get(pk=pk)
+    producto.delete()
+    return redirect('lista_producto')
 
-#Metodo de vista para manejar login
 def login_vista(request):
-
     error = None
-
     if request.method == 'POST':
         usuario = request.POST.get('usuario')
-        contra = request.POST.get('password')   
-
-        user = authenticate(username = usuario, password = contra)
-
+        contra = request.POST.get('password')
+        user = authenticate(username=usuario, password=contra)
         if user is None:
-            error = 'Error: Las credenciales de acceso no son validas'
+            error = 'Error: Las credenciales de acceso no son válidas'
         else:
             login(request, user)
             return redirect('insumos')
+    return render(request, 'login.html', {"error": error})
 
-    return render(request, 'login.html',{"error":error})
+def logout_vista(request):
+    logout(request)
+    return redirect('index')
 
-#Proteger las vistas requeridas con el decorador, para que solo los usuarios autenticados puedan acceder.
 @login_required
 def comprar(request):
     return render(request, 'comprar.html')
@@ -104,4 +109,3 @@ def comprar(request):
 @login_required
 def reservar(request):
     return render(request, 'reservar.html')
-# Lógica para procesar la reserva y la compra (Return)
