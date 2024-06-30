@@ -49,43 +49,28 @@ def venta_resinas(request):
 def despacho(request):
     return render(request, 'despacho.html')
 
-def detalle_producto(request,pk):
-    producto = get_object_or_404(producto,pk=pk)
-    return render(request,'detalle_producto.html',{'producto': producto})
 
-def editar_producto(request,pk):
-    producto = get_object_or_404(producto,pk=pk)
-    if request.method == "POST":
-        form = productoform(request.POST, request.FILES, isinstance=producto)
+def agregar_producto(request):
+    if request.method == 'POST':
+        form = ProductoForm(request.POST, request.FILES)
         if form.is_valid():
-            producto = form.save()
-            return redirect('detalle_producto', pk=producto.pk)
+            form.save()
+            # Redirigir a la página principal o a donde necesites después de guardar
+            return redirect('agregar_producto')  # Ajusta 'home' al nombre de tu ruta de redirección
     else:
-        form = productoform(isinstance=producto)
-    return render(request,'editar_producto.html' , {'form' : form})
+        form = ProductoForm()
 
-def lista_producto(request):
-    productos =Producto.objects.all()
-    return render(request,'lista_producto.html', {'productos': productos})
-
-def nuevo_producto (request):
-    if request.method =="POST":
-        form = productoform(reqest.POST, request.FILES)
-        if form.is_valid():
-            producto = form.save()
-            return redirect('detalle_producto', pk=producto.pk)
-    else:
-        form = productoform(isinstance=producto)
-    return render(request,'editar_producto.html' , {'form' : form})
+    return render(request, 'agregar.html', {'form': form})
 
 
 
-def eliminar_producto(request, pk):
-    producto = get_object_or_404(producto , pk=pk)
-    producto.delete()
-    return redirect('lista_productos')
+def listar_producto(request):
+    productos = Producto.objects.all()
 
-
+    data = {
+        'productos' : productos
+    }
+    return render(request, 'listar.html',data)
 
 
 

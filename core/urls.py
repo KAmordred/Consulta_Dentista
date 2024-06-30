@@ -18,11 +18,8 @@ urlpatterns = [
     path('sillones/', views.sillones, name='sillones'),
     path('despacho/', views.despacho, name='despacho'),
     path('login/', views.login_vista, name='login'),
-
-    path('productos/', views.lista_producto, name = 'lista_producto'),
-    path('productos/nuevo/', views.nuevo_producto, name ='nuevo_producto'),
-    path('productos/<int:pk>/', views.detalle_producto, name = 'detalle_producto'),
-    path('productos/<int:pk>/editar/', views.editar_producto, name ='editar_producto'),
-    path('productos/<int:pk>/eliminar/', views.eliminar_producto, name ='eliminar_producto'),
+    path('agregar-producto/', views.agregar_producto, name='agregar_producto'),
+    path('listar-productos/', views.listar_producto, name='listar_productos'),
+  
     
 ]
