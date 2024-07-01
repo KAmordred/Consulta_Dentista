@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from .forms import ProductoForm
@@ -80,10 +80,28 @@ def editar_producto(request, pk):
         form = ProductoForm(instance=producto)
     return render(request, 'editar.html', {'form': form})
 
-def eliminar_producto(request, pk):
-    producto = Producto.objects.get(pk=pk)
+def eliminar_producto(request, id):
+    producto = Producto.objects.get(id=id)
     producto.delete()
     return redirect('lista_producto')
+
+
+def modificar_producto(request, id):
+
+    producto = get_object_or_404(Producto, id=id)
+
+    data = {
+        'form': ProductoForm(instance=producto)
+    }
+
+    if request.method =='POST':
+        formulario = ProductoForm(data = request.POST, instance=producto, files= request.FILES)
+        if formulario.is_valid():
+            formulario.save()
+            return redirect(to='lista_producto')
+        data["form"] = formulario
+
+    return render(request, 'modificar.html',data)
 
 def login_vista(request):
     error = None
