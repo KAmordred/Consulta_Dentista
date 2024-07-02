@@ -18,7 +18,9 @@ def especialidades(request):
     return render(request, 'especialidades.html')
 
 def insumos(request):
-    return render(request, 'insumos.html')
+    productos = Producto.objects.all()
+    return render(request, 'insumos.html', {'productos': productos})
+# logica para obtener los productos desde la base de datos
 
 def sillones(request):
     return render(request, 'sillones.html')

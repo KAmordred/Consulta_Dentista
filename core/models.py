@@ -9,6 +9,16 @@ class Producto(models.Model):
 
     def __str__(self):
         return self.nombre
+    
+    # Definimos la clase producto y que sera un tipo de modelo de Django (tipo especial para crear bases de datos).
+    # Definimos los atributos:
+    # (models.CharField) almacenara datos con una longitud maxima de 255 caracteres.
+    # (models.TextField) esto es para almacenar grandes cantidades de texto.
+    # (models.DecimalField(max_digits=10, decimal_places=2) almacena los precios de los productos como valores decimales.
+    # (models.PositiveIntegerField) restringe los valores a enteros no negativos.
+    # (models.ImageField) almacenará las rutas de los archivos de imagen.
+    # - upload_to='productos/' especifica un directorio donde se cargarán las imágenes del producto.
+    # - blank=True, null=True permite productos sin imagen (opcional)
 
 class Pedido(models.Model):
     fecha_pedido = models.DateTimeField(auto_now_add=True)
