@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
-from .forms import ProductoForm
+from .forms import ProductoForm, CustomUserCreationForm
 from .models import Producto
+from django.contrib import messages
 
 # Create your views here.
 def index(request):
@@ -129,3 +130,18 @@ def comprar(request):
 @login_required
 def reservar(request):
     return render(request, 'reservar.html')
+
+def registro(request):
+    data = {
+        'form': CustomUserCreationForm()
+    }
+
+    formulario = CustomUserCreationForm(data = request.POST)
+    if formulario.is_valid():
+        formulario.save()
+        user = authenticate(username = formulario.cleaned_data["username"], password = formulario.cleaned_data["password1"])
+        login(request,user)
+        messages.success(request,"Registro exitoso ")
+        return redirect(to ='index')
+    data["form"] = formulario
+    return render(request, 'registration/registro.html',data)
