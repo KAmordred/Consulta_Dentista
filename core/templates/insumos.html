@@ -120,7 +120,7 @@
                                     <div class="card-content">
                                         <h3>{{ producto.nombre }}</h3>
                                         <p>Precio: ${{ producto.precio|floatformat:1 }}</p>
-                                        <button class="boton" onclick="agregarProductoAlCarrito('{{ producto.nombre }}', {{ producto.precio }})">Añadir al carrito</button>
+                                        <button class="boton" onclick="agregarProductoAlCarrito('{{ producto.nombre }}, {{ producto.precio }}')">Añadir al carrito</button>
                                     </div>
                                 </div>
                             {% endfor %}
