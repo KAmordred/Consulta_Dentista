@@ -102,7 +102,7 @@
         {% endblock %}
     </div>
 
-    <!-- Off-canvas para el carrito de compras -->
+    <!-- Off-canvas CARRO -->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas" aria-labelledby="cartOffcanvasLabel">
         <div class="offcanvas-header">
             <h4 class="offcanvas-title" id="cartOffcanvasLabel">Carrito de Compras</h4>
@@ -116,13 +116,15 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"></path>
                         </svg>
                         <p class="cart-text">Su carro está vacío</p>
-                        <a href="/productos" class="cart-button">Ver todos los productos</a>
+                        <a href="{% url 'AVentaEquiposRX' %}" class="cart-button">Ver todos los productos</a>
                     </div>
                 </div>
             </div>
             <ul id="cart-items"></ul>
-            <p id="cart-total">Total: $0</p>
-            <button class="btn btn-primary" onclick="simularPago()">Pagar Total</button>
+            <p id="cart-subtotal">Sub Total: $0</p>
+            <p id="cart-iva">IVA (19%): $0</p>
+            <p id="cart-total">Monto a pagar: $0</p>
+            <button class="cart-button" onclick="simularPago()">Pagar Total</button>
         </div>
     </div>
 

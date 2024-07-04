@@ -29,4 +29,6 @@ urlpatterns = [
     
     path('comprar/', views.comprar, name='comprar'),
     path('reservar/', views.reservar, name='reservar'),
+
+
 ]

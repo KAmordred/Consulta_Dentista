@@ -165,6 +165,46 @@ body {
   color: #000000;
 }
 
+/* Estilos exclusivos para el carrito de compras */
+.cart-container {
+  position: relative;
+  text-align: center;
+}
+.cart-icon {
+  width: 200px;
+  height: 200px;
+  opacity: 0.5;
+  fill: rgba(0, 191, 255, 0.5); /* Color celeste transparente */
+  margin: 0 auto; /* Centrar el icono horizontalmente */
+  display: block;
+}
+.cart-text,
+.cart-button,
+#cart-subtotal,
+#cart-iva,
+#cart-total {
+  display: block;
+  color: black;
+  text-align: center;
+  margin-top: 20px; /* Espacio entre elementos */
+}
+.cart-text {
+  margin-top: 20px; /* Ajusta el margen superior según sea necesario */
+}
+.cart-button {
+  margin-top: 20px; /* Ajusta el margen superior según sea necesario */
+}
+#cart-subtotal {
+  margin-top: 20px; /* Ajusta el margen superior según sea necesario */
+}
+#cart-iva {
+  margin-top: 20px; /* Ajusta el margen superior según sea necesario */
+}
+#cart-total {
+  margin-top: 20px; /* Ajusta el margen superior según sea necesario */
+}
+
+
 /*
 como @media le daremos el formato para que sea responsive en todas las pantallas
 RECORDAR DEJAR TODO LO QUE NECECITAMOS USAR

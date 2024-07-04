@@ -35,17 +35,25 @@
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         {% if user.is_authenticated %}
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'logout' %}">Cerrar sesión</a>
+                                <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">Cerrar sesión</a>
+                                <!-- Formulario oculto para logout -->
+                                <form id="logoutForm" action="{% url 'logout' %}" method="post" style="display: none;">
+                                    {% csrf_token %}
+                                </form>
                             </li>
                         {% else %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'login' %}">Iniciar sesión <br>Mi cuenta</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'registro' %}">Registrarse </a>
                             </li>
                         {% endif %}
                         <li class="nav-item">
                             <a class="nav-link" href="#" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">Carro</a>
                         </li>
                     </ul>
+                    
                 </div>
             </div>
         </div>
@@ -87,36 +95,37 @@
     </nav>
     <!-- FINAL DE LA NAV BAR PARA TODAS LAS VISTAS -->
 
+    <!--Logica de seccion de productos, acumular, sub total, iva y la migracion de los productos desde la BD-->
     <!-- Contenido principal -->
     <div class="insumos-page">
         <div class="container-lg">
             <!-- Aquí va el contenido de la página principal -->
             <div class="contenedor-principal">
                 <div class="contenedor-productos">
-                    {% if not user.is_authenticated %}
-                        <p id="mensaje-sesion">Por favor, inicia sesión para comprar productos.</p>
-                    {% endif %}
-                    
-                    <!-- Verificar si hay productos -->
-                    {% if productos %}
-                        <!-- Crear tarjetas de productos de la base de datos -->
-                        {% for producto in productos %}
-                        <div class="card">
-                            <!-- Verificar si el producto tiene una imagen -->
-                            {% if producto.imagen %}
-                                <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
-                            {% else %}
-                                <img src="{% static 'images/default_product_image.jpg' %}" alt="Imagen por defecto">
-                            {% endif %}
-                            <div class="card-content">
-                                <h3>{{ producto.nombre }}</h3>
-                                <p>Precio: ${{ producto.precio|floatformat:1 }}</p>
-                                <button class="boton" onclick="agregarProductoAlCarrito('{{ producto.nombre }}', {{ producto.precio }})">Añadir al carrito</button>
-                            </div>
-                        </div>
-                        {% endfor %}
+                    {% if user.is_authenticated %}
+                        <!-- Verificar si hay productos -->
+                        {% if productos %}
+                            <!-- Crear tarjetas de productos de la base de datos -->
+                            {% for producto in productos %}
+                                <div class="card">
+                                    <!-- Verificar si el producto tiene una imagen -->
+                                    {% if producto.imagen %}
+                                        <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
+                                    {% else %}
+                                        <img src="{% static 'images/default_product_image.jpg' %}" alt="Imagen por defecto">
+                                    {% endif %}
+                                    <div class="card-content">
+                                        <h3>{{ producto.nombre }}</h3>
+                                        <p>Precio: ${{ producto.precio|floatformat:1 }}</p>
+                                        <button class="boton" onclick="agregarProductoAlCarrito('{{ producto.nombre }}', {{ producto.precio }})">Añadir al carrito</button>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <p>No hay productos disponibles en este momento.</p>
+                        {% endif %}
                     {% else %}
-                        <p>No hay productos disponibles en este momento.</p>
+                        <p id="mensaje-sesion">Por favor, inicia sesión para comprar productos.</p>
                     {% endif %}
                 </div>
                 <div class="contenedor-carrito">
@@ -125,19 +134,20 @@
                     <p id="subtotal">Sub Total: $0</p>
                     <p id="iva">IVA 19%: $0</p>
                     <p id="total">Monto a pagar: $0</p>
-                    <button class="boton-pagar" onclick="simularPago()">Pagar Total</button>
+                    <button class="boton-pagar" onclick="toggleCartOffcanvas()">Ir a pagar</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Off-canvas para el carrito de compras -->
+    <!-- Off-canvas CARRO -->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas" aria-labelledby="cartOffcanvasLabel">
         <div class="offcanvas-header">
             <h4 class="offcanvas-title" id="cartOffcanvasLabel">Carrito de Compras</h4>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
+            <!-- Contenido del carrito -->
             <div class="cart-container">
                 <div class="cart-preview">
                     <div class="cart-content">
@@ -145,7 +155,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"></path>
                         </svg>
                         <p class="cart-text">Su carro está vacío</p>
-                        <a href="/productos" class="cart-button">Ver todos los productos</a>
+                        <a href="{% url 'AVentaEquiposRX' %}" class="cart-button">Ver todos los productos</a>
                     </div>
                 </div>
             </div>
@@ -245,6 +255,15 @@
         document.addEventListener('DOMContentLoaded', () => {
             cargarCarritoDesdeLocalStorage();
         });
+    </script>
+
+    <script>
+        // Función para mostrar u ocultar el offcanvas del carrito
+        function toggleCartOffcanvas() {
+            var offcanvasElement = document.getElementById('cartOffcanvas');
+            var offcanvas = new bootstrap.Offcanvas(offcanvasElement);
+            offcanvas.toggle();
+        }
     </script>
 </body>
 </html>
