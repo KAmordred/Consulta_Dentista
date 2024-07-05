@@ -120,7 +120,7 @@
                                     <div class="card-content">
                                         <h3>{{ producto.nombre }}</h3>
                                         <p>Precio: ${{ producto.precio|floatformat:1 }}</p>
-                                        <button class="boton" onclick="agregarProductoAlCarrito('{{ producto.nombre }}, {{ producto.precio }}')">Añadir al carrito</button>
+                                        <button class="boton" onclick="agregarProductoAlCarrito('{{ producto.nombre }}', {{ producto.precio }})">Añadir al carrito</button>
                                     </div>
                                 </div>
                             {% endfor %}
@@ -166,9 +166,10 @@
             <p class="text-start"><strong>SELECCIONA TU OPCION DE DESPACHO</strong></p>
             <div class="form-check text-start">
                 <input class="form-check-input" type="radio" name="envio" id="retiroTienda" value="retiro" checked>
-                <label class="form-check-label" for="retiroTienda">Retiro en tienda ($0)</label>
+                <label class="form-check-label" for="retiroTienda">Retiro en tienda ($0) <br> <strong>Region Metropolitana($0)</strong> </label>
             </div>
             <div class="form-check text-start">
+                <br>
                 <input class="form-check-input" type="radio" name="envio" id="despachoDomicilio" value="despacho">
                 <label class="form-check-label" for="despachoDomicilio">Despacho a domicilio (+$4.500)</label>
             </div>
