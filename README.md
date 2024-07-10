@@ -6,7 +6,7 @@ Este es un proyecto Django diseñado para gestionar una consulta dental, incluye
 
 - Python 3.8+
 - Django 3.2+
-- PostgreSQL 12+
+- db.sqlite3
 
 ## Configuración del Entorno de Desarrollo
 
@@ -16,12 +16,23 @@ Este es un proyecto Django diseñado para gestionar una consulta dental, incluye
    git clone https://github.com/KAmordred/Consulta_Dentista
    cd consulta-dental
 
-2. Crear y Activar un Entorno Virtual:
-python -m venv env
-source env/bin/activate  # En Windows sería `env\Scripts\activate`
+2. Actualizar el PIP (instalador de paquetes)
+python -m pip install --upgrade pip
 
-3. Instalar Dependencias:
-pip install -r requirements.txt
+
+3. Instalacion de django en Terminal de windows CMD
+pip install django
+
+      Crear archivo de paquetes para el proyecto
+      py -m pip install Django==5.0.6
+
+4. Guardar proyecto
+django-admin startproject Consulta_Dentista
+
+5. Abrir con visualstudiocode
+
+6. Correr servidor manage.py
+python manage.py runserver
 
 ## Uso
 Este sistema permite a los usuarios administrar pacientes, programar citas y registrar tratamientos. Algunas de las características incluyen:

@@ -1,18 +1,26 @@
 {% extends 'Plantilla_base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 
-{% block title %}login{% endblock %}
+{% block title %}modificar{% endblock %}
 
 {% block content %}
+<div class="container">
+    <br>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="formulario-producto">
+                <form method="post">
+                    {% csrf_token %}
+                    <!-- Uso de crispy para renderizar el formulario -->
+                    {{ form|crispy }}
+                    <button type="submit" class="btn btn-primary">Editar</button>
+                    <button type="button" class="btn btn-secondary" onclick="cancelar()">Cancelar</button>
+            
+                </form>
+            </div>
+        </div>
 
-
-<div class="formulario-producto">
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Editar</button>
-        <button type="button" class="btn btn-secondary" onclick="cancelar()">Cancelar</button>
-
-    </form>
+    </div>
 </div>
 {% endblock %}

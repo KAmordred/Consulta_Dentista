@@ -1,29 +1,27 @@
-
 {% extends 'Plantilla_base.html' %}
-
 {% load static %}
-
+{% load crispy_forms_tags %}
 {% block title %}Ingreso al sistema{% endblock %}
 
 {% block content %}
     <div class="container">
+        <br><br>
         <div class="row">
             <div class="col-12 col-md-6 offset-md-3">
                 <div class="card">
                     <div class="card-body">
                         <h2>Ingresa tus credenciales</h2>
                         <hr>
-                        <form action="" method="post" >
-
+                        <form action="" method="post">
                             {% csrf_token %}
-                            {{ form }}
-
+                            {{ form|crispy }}
                             <a href="{% url 'index' %}"></a>
-                            <input type="submit" value="ingresar " class="btn btn-success float-right" >
+                            <input type="submit" value="ingresar " class="btn btn-success float-right">
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+        <br>
     </div>
 {% endblock %}

@@ -98,7 +98,8 @@
     </nav>
     <!-- FINAL DE LA NAV BAR PARA TODAS LAS VISTAS -->
 
-    <!--Logica de seccion de productos, acumular, sub total, iva y la migracion de los productos desde la BD-->
+    {% load humanize %}
+
     <!-- Contenido principal -->
     <div class="insumos-page">
         <div class="container-lg">
@@ -119,7 +120,14 @@
                                     {% endif %}
                                     <div class="card-content">
                                         <h3>{{ producto.nombre }}</h3>
-                                        <p>Precio: ${{ producto.precio|floatformat:1 }}</p>
+                                        <p>Precio: ${{ producto.precio|intcomma }}</p>
+                                        <p>Marca: {{ producto.marca }}</p>
+                                        <!-- Mostrar condición del producto -->
+                                        {% if producto.nuevo %}
+                                            <p>Condición: Nuevo</p>
+                                        {% else %}
+                                            <p>Condición: Usado</p>
+                                        {% endif %}
                                         <button class="boton" onclick="agregarProductoAlCarrito('{{ producto.nombre }}', {{ producto.precio }})">Añadir al carrito</button>
                                     </div>
                                 </div>

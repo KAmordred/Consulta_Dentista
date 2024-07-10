@@ -1,37 +1,40 @@
 {% extends 'Plantilla_base.html' %}
 {% load static %}
-
-{% block title %}login{% endblock %}
+{% load crispy_forms_tags %}
+{% block title %}Lista de Productos{% endblock %}
 
 {% block content %}
+
 {% load humanize %}
-
-
-        <h2>Lista de Productos</h2>
-
-
-<table class="table table-striped table-hover table-responsive-sm" >
-    <tr>
-        <th>nombre</th>
-        <th>precio</th>
-        <th>cantidad</th>
-        <th>Opciones</th>
-    </tr>
-
-    {% for p in productos %}
-
-    <tr>
-        <td>{{p.nombre | title }}</td>
-        <td>${{ p.precio | intcomma }}</td>
-        <td>{{ p.cantidad_disponible | title }}</td>
-        <td>
-            <a href="{% url 'modificar_producto' p.id %} " class="btn btn-info btn-sm" >Modificar</a>
-            <a href="{% url 'eliminar_producto' p.id %}" class="btn btn-danger btn-sm">Eliminar</a>
-        </td>
-    </tr>
-
-    {% endfor %}
-</table>
-
+<div class="container">
+    <br>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div>
+                <h2>Lista de Productos</h2>            
+                <table class="table table-striped table-hover table-responsive-sm">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Opciones</th>
+                    </tr>
+            
+                    {% for p in productos %}
+                    <tr>
+                        <td>{{ p.nombre | title }}</td>
+                        <td>${{ p.precio | intcomma }}</td>
+                        <td>{{ p.cantidad_disponible | title }}</td>
+                        <td>
+                            <a href="{% url 'modificar_producto' p.id %}" class="btn btn-info btn-sm">Modificar</a>
+                            <a href="{% url 'eliminar_producto' p.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

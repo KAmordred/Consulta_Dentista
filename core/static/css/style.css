@@ -94,8 +94,6 @@ body {
   max-width: 100%; 
 }
 
-
-
 #reloj {
   font-size: 24px;
   font-weight: bold;
@@ -120,39 +118,7 @@ body {
   height: auto;
   display: block;
 }
-/*Estilos de los componentes del formulario, anteriormente otro css modifico el form*/
-.form-custom .card {
-  background-color: #557ea7; /* Color de fondo */
-  border-radius: 10px; /* Bordes redondeados */
-}
-.form-custom .card-header {
-  text-align: center;
-  font-size: 1.5rem;
-}
-.form-custom .card-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center; 
-  align-items: center;
-}
 
-/*Estilos para login*/
-.login-container {
-  margin-left: 20px; /* Ajusta el margen a la izquierda según sea necesario */
-}
-
-.login-form {
-  max-width: 300px; /* Ajusta el ancho máximo del formulario */
-}
-
-.login-input {
-  width: 100%; /* Los inputs ocuparán todo el ancho disponible dentro del formulario */
-  margin-bottom: 10px; /* Espacio entre los inputs */
-}
-
-.login-button {
-  font-family: 'Arial', sans-serif; /* Cambia la fuente del botón de entrada */
-}
 
 #reloj {
   font-size: 24px;

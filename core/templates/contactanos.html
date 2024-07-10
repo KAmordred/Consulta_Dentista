@@ -1,136 +1,72 @@
 {% extends 'Plantilla_base.html' %}
 
-{% load static %}
+{% load static crispy_forms_tags %}
 
-{% block title %}contactanos{% endblock %}
+{% block title %}Contactanos{% endblock %}
 
 {% block content %}
-
-    <!--Bloque formulario contacto-->
-    <div class="card form-custom">
+    <br>
+    <!-- Formulario de contacto -->
+    <form action="" class="formulario_contacto" method="post">
+        {% csrf_token %}
         <div class="card-header">Envíanos tu consulta</div>
-        <div class="card-body">
-            <!-- Le damos la clase row, para que sea un contenedor -->
-            <form action="https://kgames-serverless-api-delta.vercel.app/api/tester" method="post" class="container" onsubmit="return validateForm()">
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" required class="form-control" id="email" placeholder="name@example.com">
-                    <div class="invalid-feedback" id="emailError">Por favor, introduce un correo electrónico válido.</div>
-                </div>
 
-                <div class="mb-3">
-                    <label class="form-label" for="edad">Edad</label>
-                    <input class="form-control" type="number" name="edad" id="edad" value="18" min="17" max="999">
-                    <div class="invalid-feedback" id="edadError">Por favor, introduce una edad válida (mayor de 17 años).</div>
-                </div>
+        <!-- Uso de crispy para el formulario -->
+        {{ form|crispy }}
 
-                <div class="mb-3">
-                    <label for="telefono" class="form-label">Teléfono</label>
-                    <input type="tel" name="telefono" id="telefono" class="form-control" oninput="validatePhone()">
-                    <div class="invalid-feedback" id="phoneError">Por favor, introduce un número de teléfono válido.</div>
-                </div>
+        <!-- Botón de envío -->
+        <button type="submit" id="btnEnviar" class="button">Enviar</button>
+    </form>
 
-                <div class="mb-3">
-                    <label for="fecha" class="form-label">Fecha de nacimiento</label>
-                    <input type="date" required name="fecha" id="fecha" class="form-control">
-                    <div class="invalid-feedback" id="fechaError">Por favor, selecciona una fecha de nacimiento válida.</div>
-                </div>
-
-                <div class="mb-3">
-                    <label for="FORMULARIO">Tipo de consulta</label>
-                    <select class="form-select" id="FORMULARIO" name="FORMULARIO" aria-label="BOX FORMULARIO">
-                        <option selected value="0">Solicitud de cita</option>
-                        <option value="1">Solicitud de información sobre servicios</option>
-                        <option value="2">Consulta sobre tratamientos específicos</option>
-                        <option value="3">Solicitud de presupuesto</option>
-                        <option value="3">Realizar una consulta</option>
-                    </select>
-                    <div class="invalid-feedback" id="formularioError">Por favor, selecciona un tipo de consulta.</div>
-                </div>
-
-                <div class="mb-3">
-                    <label for="mensaje" class="form-label">Mensaje, cuentanos que necesitas...</label>
-                    <textarea class="form-control" id="mensaje" rows="3" name="mensaje"></textarea>
-                    <div class="invalid-feedback" id="mensajeError">Por favor, introduce un mensaje.</div>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <div class="alert alert-primary d-flex align-items-center" role="alert">
-                        <input type="checkbox" class="form-check-input me-2" id="termsCheck" onclick="toggleSubmitButton()">
-                        <label class="form-check-label" for="termsCheck">Debe aceptar términos y condiciones antes de enviar el formulario.</label>
-                    </div>
-                </div>
-
-                <div class="d-flex justify-content-end mt-3">
-                    <button type="reset" class="btn btn-secondary me-2">Limpiar Formulario</button>
-                    <button id="submitBtn" class="btn btn-primary" type="submit" disabled>Enviar formulario</button>
-                </div>
-            </form>
+    <!-- Mostrar mensaje de éxito -->
+    {% if mensaje %}
+        <div class="success-message">
+            <p><strong>{{ mensaje }}</strong></p>
         </div>
-    </div>
+    {% endif %}
 
-    <script>
-        function toggleSubmitButton() {
-            var submitBtn = document.getElementById('submitBtn');
-            submitBtn.disabled = !submitBtn.disabled;
-        }
+    <!-- Tabla para mostrar los contactos (si es necesario) -->
+    <table id="tablacontactos"></table>
 
-        function validatePhone() {
-            var phoneInput = document.getElementById('telefono');
-            var phoneError = document.getElementById('phoneError');
-            var phoneRegex = /^[0-9]{10}$/; // Expresión regular para un número de teléfono de 10 dígitos
+{% endblock %}
 
-            if (!phoneRegex.test(phoneInput.value)) {
-                phoneError.style.display = 'block';
-            } else {
-                phoneError.style.display = 'none';
-            }
-        }
+{% block extra_css %}
+<style>
+    /* Estilo para el formulario de contacto */
+    .formulario_contacto {
+        max-width: 600px;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+    }
 
-        function validateForm() {
-            var emailInput = document.getElementById('email');
-            var edadInput = document.getElementById('edad');
-            var fechaInput = document.getElementById('fecha');
-            var mensajeInput = document.getElementById('mensaje');
-            var emailError = document.getElementById('emailError');
-            var edadError = document.getElementById('edadError');
-            var fechaError = document.getElementById('fechaError');
-            var mensajeError = document.getElementById('mensajeError');
-            var isValid = true;
+    /* Estilo para el botón de envío */
+    .button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+    }
 
-            // Validar el correo electrónico
-            if (!emailInput.checkValidity()) {
-                emailError.style.display = 'block';
-                isValid = false;
-            } else {
-                emailError.style.display = 'none';
-            }
+    /* Estilo del botón al pasar el cursor sobre él */
+    .button:hover {
+        background-color: #0056b3;
+    }
 
-            // Validar la edad
-            if (edadInput.value <= 17) {
-                edadError.style.display = 'block';
-                isValid = false;
-            } else {
-                edadError.style.display = 'none';
-            }
+    /* Estilo para el mensaje de éxito */
+    .success-message {
+        text-align: center;
+        margin-top: 20px;
+    }
 
-            // Validar la fecha de nacimiento
-            if (!fechaInput.value) {
-                fechaError.style.display = 'block';
-                isValid = false;
-            } else {
-                fechaError.style.display = 'none';
-            }
-
-            // Validar el mensaje
-            if (!mensajeInput.value.trim()) {
-                mensajeError.style.display = 'block';
-                isValid = false;
-            } else {
-                mensajeError.style.display = 'none';
-            }
-
-            return isValid;
-        }
-    </script>
-    <script src="{% static 'js/Registro.js' %}"></script>
+    .success-message p {
+        font-weight: bold;
+    }
+</style>
 {% endblock %}
