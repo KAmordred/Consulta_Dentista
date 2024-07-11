@@ -10,7 +10,7 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="formulario-producto">
-                <form method="post">
+                <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <!-- Uso de crispy para renderizar el formulario -->
                     {{ form|crispy }}

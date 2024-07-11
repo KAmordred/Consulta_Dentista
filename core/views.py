@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required
 from .forms import ProductoForm, CustomUserCreationForm, ContactoForm
 from .models import Producto
 from django.contrib import messages
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 
 # views.py Sirve para concectarse con el modelo django, definir procesos con Python y encontrar el template para mostrar al usuario.
 
@@ -39,22 +41,31 @@ def agregar_producto(request):
         form = ProductoForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            messages.success(request, "Agregado Correctamente")
+            messages.success(request, "Producto agregado correctamente")
             # Redirigir a la página principal o a donde necesites después de guardar
             return redirect('lista_producto')  # Ajusta 'lista_producto' al nombre correcto de la ruta
     else:
-        form = ProductoForm()
-    
+        form = ProductoForm()    
     return render(request, 'agregar.html', {'form': form})
 
 # Wiew para listar los productos al admin Django
 def listar_producto(request):
-    productos = Producto.objects.all()
-    return render(request, 'listar.html', {'productos': productos})
+    productos_list = Producto.objects.all()  # Obtiene todos los productos de la base de datos
+    paginator = Paginator(productos_list, 4)  # Mostrar 4 productos por página
+
+    page = request.GET.get('page')
+    try:
+        productos = paginator.page(page)  # Obtiene los productos para la página solicitada
+    except PageNotAnInteger:
+        # Si el parámetro de la página no es un número, muestra la primera página
+        productos = paginator.page(1)
+    except EmptyPage:
+        # Si la página está fuera del rango, muestra la última página
+        productos = paginator.page(paginator.num_pages)
+    return render(request, 'listar.html', {'productos': productos})  # Renderiza la plantilla con los productos paginados
 
 # Wiew para modificar los los productos desde el admin Django
 def modificar_producto(request, id):
-
     producto = get_object_or_404(Producto, id=id) #get_object_or_404, busca un producto o elemento
 
     data = {
@@ -68,7 +79,6 @@ def modificar_producto(request, id):
             messages.success(request, "Modificado Correctamente")
             return redirect('lista_producto')
         data["form"] = formulario
-
     return render(request, 'modificar.html', data)
 
 # View para eliminar los productos
@@ -139,8 +149,19 @@ def reservar(request):
 # Logica para obtener los productos desde la base de datos y mostrarlos en la vista de insumos.
 # Se realiza la consulta de objetos y se transforman los datos en una lista de productos (instancias).
 def insumos(request):
-    productos = Producto.objects.all()
-    return render(request, 'insumos.html', {'productos': productos})
+    productos_list = Producto.objects.all()  # Obtiene todos los productos de la base de datos
+    paginator = Paginator(productos_list, 8)  # Mostrar 8 productos por página
+
+    page = request.GET.get('page')
+    try:
+        productos = paginator.page(page)  # Obtiene los productos para la página solicitada
+    except PageNotAnInteger:
+        # Si el parámetro de la página no es un número, muestra la primera página
+        productos = paginator.page(1)
+    except EmptyPage:
+        # Si la página está fuera del rango, muestra la última página
+        productos = paginator.page(paginator.num_pages)
+    return render(request, 'insumos.html', {'productos': productos})  # Renderiza la plantilla con los productos paginados
 
 def nosotros(request):
     return render(request, 'nosotros.html')

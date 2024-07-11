@@ -8,3 +8,6 @@ django-rest-framework
 
 # Instalar en terminal: 
 # pip install -r requirements.txt 
+
+# Instalar Explorer de SQLITE en buscador de VisualStudioCode // >SQLite: Open Database
+# db.sqlite3 (Buscar mi proyecto)
