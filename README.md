@@ -18,10 +18,3 @@ Este es un proyecto Django diseñado para gestionar una consulta dental, incluye
 
 2. Actualizar el PIP (instalador de paquetes)
 python -m pip install --upgrade pip
-
-
-3. Instalacion de django en Terminal de windows CMD
-pip install django
-
-      Crear archivo de paquetes para el proyecto
-      py -m pip install Django==5.0.6
