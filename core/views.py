@@ -163,6 +163,11 @@ def insumos(request):
         productos = paginator.page(paginator.num_pages)
     return render(request, 'insumos.html', {'productos': productos})  # Renderiza la plantilla con los productos paginados
 
+#View para manejar vistas para mostrar los detalles de los productos
+def detalle_producto(request, id):
+    producto = get_object_or_404(Producto, id=id)  # Obtiene el producto o lanza un error 404 si no existe
+    return render(request, 'detalle_producto.html', {'producto': producto})  # Renderiza la plantilla con los detalles del producto
+
 def nosotros(request):
     return render(request, 'nosotros.html')
 
