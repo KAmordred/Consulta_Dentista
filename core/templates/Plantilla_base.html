@@ -19,6 +19,21 @@
             max-width: 60px; /* ajusta el ancho máximo de la imagen */
             height: 60px; /* mantiene la proporción de aspecto */
         }
+        .offcanvas-body .product-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .offcanvas-body .product-item img {
+            max-width: 50px;
+            margin-right: 10px;
+        }
+        .cart-info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -103,7 +118,6 @@
     <!--FINAL DE LA NAV BAR PARA TODAS LAS VISTAS--> 
 
     <div>
-
         {% block content %}
         {% endblock %}
     </div>
@@ -116,33 +130,16 @@
         </div>
         <div class="offcanvas-body">
             <!-- Contenido del carrito -->
-            <div class="cart-container text-start">
-                <div class="cart-preview">
-                    <div class="cart-content">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="cart-icon">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"></path>
-                        </svg>
-                        <p><strong>DETALLE</strong></p>
-                    </div>
-                </div>
-            </div>
-            <ul id="cart-items" class="text-start"></ul>
-            <!-- Opciones de envío -->
-            <p class="text-start"><strong>SELECCIONA TU OPCION DE DESPACHO</strong></p>
-            <div class="form-check text-start">
-                <input class="form-check-input" type="radio" name="envio" id="retiroTienda" value="retiro" checked>
-                <label class="form-check-label" for="retiroTienda">Retiro en tienda ($0) <br> <strong>Region Metropolitana($0)</strong></label>
-            </div>
-            <div class="form-check text-start">
-                <br>
-                <input class="form-check-input" type="radio" name="envio" id="despachoDomicilio" value="despacho">
-                <label class="form-check-label" for="despachoDomicilio">Despacho a domicilio (+$4.500)</label>
-            </div>
+            <div id="cart-items" class="text-start"></div>
             <!-- Resumen del carrito -->
             <p id="cart-subtotal" class="text-start">Sub Total: $0</p>
             <p id="cart-iva" class="text-start">IVA (19%): $0</p>
             <p id="cart-total" class="text-start">Monto a pagar: $0</p>
-            <button class="cart-button" onclick="simularPago()">Pagar Total</button>
+
+            <!-- Ir a la vista para pagar -->
+            <div class="text-center mt-4">
+                <a href="{% url 'ver_carrito' %}" class="btn btn-primary">Ir a tu carrito de compras</a>
+            </div>
         </div>
     </div>
 
@@ -174,7 +171,7 @@
         {% for message in messages %}
             <script>
                 Swal.fire({
-                    title: 'Accion realizada',
+                    title: 'Acción realizada',
                     text: '{{ message }}',
                     icon: 'success'   
                 })
@@ -184,10 +181,69 @@
 
     <script>
         // Función para actualizar el carrito en la navbar y el offcanvas
-        function actualizarCarrito() {
-            // Actualiza el offcanvas del carrito
+        function actualizarCarritoOffcanvas() {
+            const cartItemsList = document.getElementById('cart-items');
+            const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+            let subtotal = 0;
+
+            cartItemsList.innerHTML = '';
+            carrito.forEach((producto, id) => {
+                const cartItem = document.createElement('div');
+                cartItem.className = 'product-item';
+
+                const itemInfo = document.createElement('div');
+                itemInfo.className = 'cart-info';
+                itemInfo.innerHTML = `
+                    <img src="${producto.imagen_url}" alt="${producto.nombre}" class="img-thumbnail" style="width: 50px; height: 50px;">
+                    <div>
+                        <p>${producto.nombre}</p>
+                        <p>Precio: $${producto.precio}</p>
+                        <div class="d-flex">
+                            <button class="btn btn-sm btn-outline-secondary" onclick="actualizarCantidad(${id}, ${producto.cantidad - 1})">-</button>
+                            <input type="text" class="form-control form-control-sm text-center mx-1" value="${producto.cantidad}" style="width: 50px;" readonly>
+                            <button class="btn btn-sm btn-outline-secondary" onclick="actualizarCantidad(${id}, ${producto.cantidad + 1})">+</button>
+                        </div>
+                        <p>Stock: ${producto.stock}</p>
+                    </div>
+                `;
+                
+                const itemActions = document.createElement('div');
+                itemActions.innerHTML = `<button class="btn btn-danger btn-sm" onclick="eliminarProducto(${id})">Eliminar</button>`;
+                
+                cartItem.appendChild(itemInfo);
+                cartItem.appendChild(itemActions);
+                cartItemsList.appendChild(cartItem);
+
+                subtotal += producto.precio * producto.cantidad;
+            });
+
+            const iva = subtotal * 0.19;
+            const total = subtotal + iva;
+
+            document.getElementById('cart-subtotal').textContent = `Sub Total: $${subtotal.toFixed(2)}`;
+            document.getElementById('cart-iva').textContent = `IVA (19%): $${iva.toFixed(2)}`;
+            document.getElementById('cart-total').textContent = `Monto a pagar: $${total.toFixed(2)}`;
+        }
+
+        function actualizarCantidad(id, cantidad) {
+            const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+            if (carrito[id]) {
+                carrito[id].cantidad = cantidad > 0 ? cantidad : 1;
+                localStorage.setItem('carrito', JSON.stringify(carrito));
+                actualizarCarritoOffcanvas();
+            }
+        }
+
+        function eliminarProducto(id) {
+            const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+            carrito.splice(id, 1);
+            localStorage.setItem('carrito', JSON.stringify(carrito));
             actualizarCarritoOffcanvas();
         }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            actualizarCarritoOffcanvas();
+        });
     </script>
     {% block scripts %}
     {% endblock %}

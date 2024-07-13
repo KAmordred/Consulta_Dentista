@@ -134,17 +134,61 @@ def registro(request):
     data["form"] = formulario
     return render(request, 'registration/registro.html',data)
 
+#Desloguearse y regresar a vista principal
 def logout_vista(request):
     logout(request)
     return redirect('index')
 
+#View para manejar el carrito de compras
+def agregar_al_carrito(request, id):
+    producto = get_object_or_404(Producto, id=id)
+    carrito = request.session.get('carrito', {})
+
+    if str(producto.id) in carrito:
+        carrito[str(producto.id)]['cantidad'] += 1
+    else:
+        carrito[str(producto.id)] = {
+            'nombre': producto.nombre,
+            'precio': float(producto.precio),
+            'marca': producto.marca,
+            'cantidad': 1,
+            'imagen_url': producto.imagen.url if producto.imagen else None,
+            'stock': producto.cantidad_disponible
+        }
+
+    request.session['carrito'] = carrito
+    messages.success(request, "Producto agregado correctamente")
+    return redirect('insumos')
+
+# proteccion de las vistas que necesitan autenticacion con decorador @login_required
 @login_required
-def comprar(request):
-    return render(request, 'comprar.html')
+def ver_carrito(request):
+    carrito = request.session.get('carrito', {})
+    total = sum(item['precio'] * item['cantidad'] for item in carrito.values())
+    subtotal = total / 1.19
+    iva = total - subtotal
+    return render(request, 'carrito.html', {'carrito': carrito, 'total': total, 'subtotal': subtotal, 'iva': iva})
 
 @login_required
-def reservar(request):
-    return render(request, 'reservar.html')
+def eliminar_del_carrito(request, id):
+    carrito = request.session.get('carrito', {})
+    if str(id) in carrito:
+        del carrito[str(id)]
+    request.session['carrito'] = carrito
+    messages.success(request, "Producto eliminado correctamente")
+    return redirect('ver_carrito')
+
+@login_required
+def actualizar_cantidad(request, id):
+    carrito = request.session.get('carrito', {})
+    if str(id) in carrito:
+        cantidad = int(request.POST.get('cantidad', 1))
+        if cantidad > 0:
+            carrito[str(id)]['cantidad'] = cantidad
+        else:
+            del carrito[str(id)]
+    request.session['carrito'] = carrito
+    return redirect('ver_carrito')
 
 # Logica para obtener los productos desde la base de datos y mostrarlos en la vista de insumos.
 # Se realiza la consulta de objetos y se transforman los datos en una lista de productos (instancias).

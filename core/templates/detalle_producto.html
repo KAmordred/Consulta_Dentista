@@ -22,13 +22,11 @@
             <p><strong>Marca:</strong> {{ producto.marca }}</p>
             <p><strong>Condición:</strong> {{ producto.nuevo|yesno:"Nuevo,Usado" }}</p>
             <p><strong>Stock:</strong> {{ producto.cantidad_disponible }}</p>
-            <p><strong>Descripcion:</strong> {{producto.descripcion}} </p>
+            <p><strong>Descripcion:</strong> {{producto.detalle_producto}} </p>
             <button class="btn btn-primary" onclick="agregarProductoAlCarrito('{{ producto.nombre }}', {{ producto.precio }})">Añadir al carrito</button>
         </div>
     </div>
 </div>
 
-<script>
-    // Función para agregar producto al carrito (puedes copiar la lógica de la plantilla insumos.html)
-</script>
+
 {% endblock %}

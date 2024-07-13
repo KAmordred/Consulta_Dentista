@@ -10,7 +10,7 @@ function toggleCartOffcanvas() {
 }
 
 // Función para agregar producto al carrito
-function agregarProductoAlCarrito(nombre, precio) {
+function agregarProductoAlCarrito(nombre, precio, imagen_url, stock) {
     // Buscar si el producto ya está en el carrito
     let encontrado = false;
     carrito.forEach((producto) => {
@@ -21,7 +21,7 @@ function agregarProductoAlCarrito(nombre, precio) {
     });
     // Si el producto no está en el carrito, agregarlo
     if (!encontrado) {
-        carrito.push({ nombre: nombre, precio: precio, cantidad: 1 });
+        carrito.push({ nombre: nombre, precio: precio, cantidad: 1, imagen_url: imagen_url, stock: stock });
     }
     actualizarCarrito();
     guardarCarritoEnLocalStorage();

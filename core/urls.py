@@ -38,7 +38,9 @@ urlpatterns = [
     path('eliminar-producto/<int:id>/', views.eliminar_producto, name='eliminar_producto'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('registro/', views.registro, name="registro"),    
-    path('comprar/', views.comprar, name='comprar'),
-    path('reservar/', views.reservar, name='reservar'),
     path('producto/<int:id>/', views.detalle_producto, name='detalle_producto'), 
+    path('carrito/', views.ver_carrito, name='ver_carrito'),
+    path('agregar_al_carrito/<int:id>/', views.agregar_al_carrito, name='agregar_al_carrito'),
+    path('eliminar_del_carrito/<int:id>/', views.eliminar_del_carrito, name='eliminar_del_carrito'),
+    path('actualizar_cantidad/<int:id>/', views.actualizar_cantidad, name='actualizar_cantidad'),
 ]
