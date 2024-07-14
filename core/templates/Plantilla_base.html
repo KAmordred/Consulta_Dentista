@@ -75,7 +75,7 @@
                             </li>
                         {% endif %}
                         <li class="nav-item">
-                            <a class="nav-link" href="#" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">Carro</a>
+                            <a class="nav-link" href="{% url 'ver_carrito' %}" >Carro</a>
                         </li>
                     </ul>
                 </div>
@@ -122,26 +122,7 @@
         {% endblock %}
     </div>
 
-    <!-- Off-canvas CARRO -->
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas" aria-labelledby="cartOffcanvasLabel">
-        <div class="offcanvas-header">
-            <h4 class="offcanvas-title" id="cartOffcanvasLabel">Carrito de Compras</h4>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <!-- Contenido del carrito -->
-            <div id="cart-items" class="text-start"></div>
-            <!-- Resumen del carrito -->
-            <p id="cart-subtotal" class="text-start">Sub Total: $0</p>
-            <p id="cart-iva" class="text-start">IVA (19%): $0</p>
-            <p id="cart-total" class="text-start">Monto a pagar: $0</p>
-
-            <!-- Ir a la vista para pagar -->
-            <div class="text-center mt-4">
-                <a href="{% url 'ver_carrito' %}" class="btn btn-primary">Ir a tu carrito de compras</a>
-            </div>
-        </div>
-    </div>
+    
 
     <!--PARTE DEL MAPA -->
     <div class="cosas-mapa">
