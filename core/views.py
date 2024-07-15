@@ -2,9 +2,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from .forms import ProductoForm, CustomUserCreationForm, ContactoForm
-from .models import Producto
+from .models import Producto, Despacho, Region
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from rest_framework import viewsets
+from .serializers import DespachoSerializer
 
 
 # views.py Sirve para concectarse con el modelo django, definir procesos con Python y encontrar el template para mostrar al usuario.
@@ -145,29 +147,96 @@ def agregar_al_carrito(request, id):
     carrito = request.session.get('carrito', {})
 
     if str(producto.id) in carrito:
-        carrito[str(producto.id)]['cantidad'] += 1
+        if carrito[str(producto.id)]['cantidad'] < producto.cantidad_disponible:
+            carrito[str(producto.id)]['cantidad'] += 1
+            producto.cantidad_disponible -= 1
+            producto.save()
+            messages.success(request, "Producto agregado correctamente")
+        else:
+            messages.error(request, "No hay suficiente stock disponible")
     else:
-        carrito[str(producto.id)] = {
-            'nombre': producto.nombre,
-            'precio': float(producto.precio),
-            'marca': producto.marca,
-            'cantidad': 1,
-            'imagen_url': producto.imagen.url if producto.imagen else None,
-            'stock': producto.cantidad_disponible
-        }
+        if producto.cantidad_disponible > 0:
+            carrito[str(producto.id)] = {
+                'nombre': producto.nombre,
+                'precio': float(producto.precio),
+                'marca': producto.marca,
+                'cantidad': 1,
+                'imagen_url': producto.imagen.url if producto.imagen else None,
+                'stock': producto.cantidad_disponible - 1
+            }
+            producto.cantidad_disponible -= 1
+            producto.save()
+            messages.success(request, "Producto agregado correctamente")
+        else:
+            messages.error(request, "No hay suficiente stock disponible")
 
     request.session['carrito'] = carrito
-    messages.success(request, "Producto agregado correctamente")
     return redirect('insumos')
 
 # proteccion de las vistas que necesitan autenticacion con decorador @login_required
 @login_required
 def ver_carrito(request):
     carrito = request.session.get('carrito', {})
-    total = sum(item['precio'] * item['cantidad'] for item in carrito.values())
-    subtotal = total / 1.19
-    iva = total - subtotal
-    return render(request, 'carrito.html', {'carrito': carrito, 'total': total, 'subtotal': subtotal, 'iva': iva})
+    costo_despacho = None  # Inicialmente None
+    region_id = direccion = ciudad = codigo_postal = None
+
+    if request.method == 'POST':
+        region_id = request.POST.get('region')
+        direccion = request.POST.get('direccion')
+        ciudad = request.POST.get('ciudad')
+        codigo_postal = request.POST.get('codigo_postal')
+        
+        if region_id:
+            region = get_object_or_404(Region, pk=region_id)
+            region_ordinal = region.ordinal  # Obtener el ordinal como está en el modelo
+            costo_despacho = 4500  # Costo base para la Región Metropolitana
+
+            # Calcular el costo de despacho basado en el ordinal
+            if region_ordinal == 'XV':
+                costo_despacho += 1500 * 6
+            elif region_ordinal == 'I':
+                costo_despacho += 1500 * 5
+            elif region_ordinal == 'II':
+                costo_despacho += 1500 * 4
+            elif region_ordinal == 'III':
+                costo_despacho += 1500 * 3
+            elif region_ordinal == 'IV':
+                costo_despacho += 1500 * 2
+            elif region_ordinal == 'VI':
+                costo_despacho += 1500 * 1
+            elif region_ordinal == 'VII':
+                costo_despacho += 1500 * 2
+            elif region_ordinal == 'VIII':
+                costo_despacho += 1500 * 3
+            elif region_ordinal == 'IX':
+                costo_despacho += 1500 * 4
+            elif region_ordinal == 'XIV':
+                costo_despacho += 1500 * 5
+            elif region_ordinal == 'X':
+                costo_despacho += 1500 * 6
+            elif region_ordinal == 'XI':
+                costo_despacho += 1500 * 7
+            elif region_ordinal == 'XII':
+                costo_despacho += 1500 * 8
+
+    subtotal = sum(item['precio'] * item['cantidad'] for item in carrito.values())
+    iva = subtotal * 0.19
+    total = subtotal + iva + (costo_despacho if costo_despacho else 0)
+
+    context = {
+        'carrito': carrito,
+        'subtotal': subtotal,
+        'iva': iva,
+        'total': total,
+        'costo_despacho': costo_despacho,
+        'regiones': Region.objects.all(),
+        'region_id': region_id,
+        'direccion': direccion or '',
+        'ciudad': ciudad or '',
+        'codigo_postal': codigo_postal or ''
+    }
+
+    return render(request, 'carrito.html', context)
 
 @login_required
 def eliminar_del_carrito(request, id):
@@ -247,3 +316,8 @@ def venta_resinas(request):
 
 def despacho(request):
     return render(request, 'despacho.html')
+
+#View para definir las vistas para la API
+class DespachoViewSet(viewsets.ModelViewSet):
+    queryset = Despacho.objects.all()
+    serializer_class = DespachoSerializer

@@ -5,6 +5,8 @@ django-admin-interface
 django-crispy-forms
 crispy-bootstrap5
 django-rest-framework
+djangorestframework
+
 
 # Instalar en terminal: 
 # pip install -r requirements.txt 

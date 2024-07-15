@@ -18,9 +18,15 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
+from rest_framework import routers
+from core.views import DespachoViewSet
+
+router = routers.DefaultRouter()
+router.register(r'despachos', DespachoViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/', include(router.urls)),
     path('', include('core.urls')),
     path('acounts/', include('django.contrib.auth.urls')),    
 ]

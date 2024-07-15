@@ -61,3 +61,30 @@ class Contacto(models.Model):
 
     def __str__(self):
         return self.nombre
+
+class Despacho(models.Model):
+    destinatario = models.CharField(max_length=100)
+    direccion = models.CharField(max_length=200)
+    ciudad = models.CharField(max_length=100)
+    codigo_postal = models.CharField(max_length=10)
+    peso = models.FloatField()
+    dimensiones = models.CharField(max_length=50)
+    costo_envio = models.FloatField(null=True, blank=True)  #campo para el costo de envío
+    fecha_despacho = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.destinatario} - {self.direccion}'
+    
+class Region(models.Model):
+    nombre = models.CharField(max_length=64)
+    ordinal = models.CharField(max_length=4)
+
+    def __str__(self):
+        return self.nombre
+
+class Provincia(models.Model):
+    nombre = models.CharField(max_length=64)
+    region = models.ForeignKey(Region, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.nombre    

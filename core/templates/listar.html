@@ -1,10 +1,10 @@
 {% extends 'Plantilla_base.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
+{% load humanize %}
 {% block title %}Lista de Productos{% endblock %}
 
 {% block content %}
-{% load humanize %}
 <div class="container">
     <br>
     <div class="row justify-content-center">
@@ -22,7 +22,7 @@
                     {% for p in productos %}
                     <tr>
                         <td>{{ p.nombre | title }}</td>
-                        <td>${{ p.precio | intcomma }}</td>
+                        <td>${{ p.precio | floatformat:0 | intcomma }}</td>
                         <td>{{ p.cantidad_disponible | title }}</td>
                         <td>
                             <a href="{% url 'modificar_producto' p.id %}" class="btn btn-info btn-sm" style="margin-bottom: 10px;">Modificar</a><br>
